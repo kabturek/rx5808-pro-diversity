@@ -55,6 +55,8 @@ SOFTWARE.
 #else
     #define MENU_Y_SIZE 15
 #endif
+#define MENU_X_MARGIN 5
+#define MENU_Y_MARGIN 5
 #define TV_Y_GRID 14
 #define TV_Y_OFFSET 3
 
@@ -92,16 +94,16 @@ void screens::mainMenu(uint8_t menu_id) {
     reset(); // start from fresh screen.
     drawTitleBox(PSTR("MODE SELECTION"));
 
-    TV.printPGM(10, 5+1*MENU_Y_SIZE, PSTR("Auto Search"));
-    TV.printPGM(10, 5+2*MENU_Y_SIZE, PSTR("Band Scanner"));
-    TV.printPGM(10, 5+3*MENU_Y_SIZE, PSTR("Manual Mode"));
+    TV.printPGM(MENU_X_MARGIN, MENU_Y_MARGIN+1*MENU_Y_SIZE, PSTR("Auto Search"));
+    TV.printPGM(MENU_X_MARGIN, MENU_Y_MARGIN+2*MENU_Y_SIZE, PSTR("Band Scanner"));
+    TV.printPGM(MENU_X_MARGIN, MENU_Y_MARGIN+3*MENU_Y_SIZE, PSTR("Manual Mode"));
 #ifdef USE_DIVERSITY
     if( isDiversity() )
     {
-        TV.printPGM(10, 5+4*MENU_Y_SIZE, PSTR("Diversity"));
+        TV.printPGM(MENU_X_MARGIN, MENU_Y_MARGIN+4*MENU_Y_SIZE, PSTR("Diversity"));
     }
 #endif
-    TV.printPGM(10, 5+5*MENU_Y_SIZE, PSTR("Setup Menu"));
+    TV.printPGM(MENU_X_MARGIN, MENU_Y_MARGIN+5*MENU_Y_SIZE, PSTR("Setup Menu"));
     // selection by inverted box
 
     TV.draw_rect(0,3+(menu_id+1)*MENU_Y_SIZE,127,12,  WHITE, INVERT);
@@ -346,9 +348,9 @@ void screens::updateScreenSaver(char active_receiver, uint8_t rssi, uint8_t rssi
 void screens::diversity(uint8_t diversity_mode) {
     reset();
     drawTitleBox(PSTR("DIVERSITY"));
-    TV.printPGM(10, 5+1*MENU_Y_SIZE, PSTR("Auto"));
-    TV.printPGM(10, 5+2*MENU_Y_SIZE, PSTR("Receiver A"));
-    TV.printPGM(10, 5+3*MENU_Y_SIZE, PSTR("Receiver B"));
+    TV.printPGM(MENU_X_MARGIN, MENU_Y_MARGIN+1*MENU_Y_SIZE, PSTR("Auto"));
+    TV.printPGM(MENU_X_MARGIN, MENU_Y_MARGIN+2*MENU_Y_SIZE, PSTR("Receiver A"));
+    TV.printPGM(MENU_X_MARGIN, MENU_Y_MARGIN+3*MENU_Y_SIZE, PSTR("Receiver B"));
     // RSSI Strength
     TV.draw_line(0,3+4*MENU_Y_SIZE, TV_X_MAX, 3+4*MENU_Y_SIZE, WHITE);
     TV.printPGM(10, 6+4*MENU_Y_SIZE, PSTR("A:"));
@@ -379,20 +381,20 @@ void screens::updateDiversity(char active_receiver, uint8_t rssiA, uint8_t rssiB
 void screens::voltage(uint8_t menu_id, int voltage_calibration, uint8_t warning_voltage, uint8_t critical_voltage) {
     reset();
     drawTitleBox(PSTR("VOLTAGE ALARM"));
-    TV.printPGM(5, 5+1*MENU_Y_SIZE, PSTR("Warning"));
-    TV.print(5+(11*8), 5+1*MENU_Y_SIZE, (float)warning_voltage/10.0, 1);
-    TV.printPGM(5, 5+2*MENU_Y_SIZE, PSTR("Critical"));
-    TV.print(5+(11*8), 5+2*MENU_Y_SIZE, (float)critical_voltage/10.0, 1);
-    TV.printPGM(5, 5+3*MENU_Y_SIZE, PSTR("Calibrate"));
-    TV.print(5+(11*8), 5+3*MENU_Y_SIZE, voltage_calibration, 10);
-    TV.printPGM(5, 5+4*MENU_Y_SIZE, PSTR("Save"));
+    TV.printPGM(MENU_X_MARGIN, MENU_Y_MARGIN+1*MENU_Y_SIZE, PSTR("Warning"));
+    TV.print(MENU_X_MARGIN+(11*8)-2, MENU_Y_MARGIN+1*MENU_Y_SIZE, (float)warning_voltage/10.0, 1);
+    TV.printPGM(MENU_X_MARGIN, MENU_Y_MARGIN+2*MENU_Y_SIZE, PSTR("Critical"));
+    TV.print(MENU_X_MARGIN+(11*8)-2, MENU_Y_MARGIN+2*MENU_Y_SIZE, (float)critical_voltage/10.0, 1);
+    TV.printPGM(MENU_X_MARGIN, MENU_Y_MARGIN+3*MENU_Y_SIZE, PSTR("Calibrate"));
+    TV.print(MENU_X_MARGIN+(11*8)-2, MENU_Y_MARGIN+3*MENU_Y_SIZE, voltage_calibration, 10);
+    TV.printPGM(MENU_X_MARGIN, MENU_Y_MARGIN+4*MENU_Y_SIZE, PSTR("Save"));
 
     TV.draw_rect(0,3+(menu_id+1)*MENU_Y_SIZE,127,12,  WHITE, INVERT);
 }
 void screens::updateVoltage(int voltage){
 
-    TV.printPGM(5, 10+5*MENU_Y_SIZE, PSTR("Measured"));
-    TV.print(5+(11*8), 10+5*MENU_Y_SIZE, (float)voltage/10, 1);
+    TV.printPGM(MENU_X_MARGIN, MENU_Y_MARGIN+6*MENU_Y_SIZE, PSTR("Measured"));
+    TV.print(MENU_X_MARGIN+(11*8)-2, MENU_Y_MARGIN+6*MENU_Y_SIZE, (float)voltage/10, 1);
 
 }
 #endif
@@ -403,46 +405,46 @@ void screens::updateSetupMenu(uint8_t menu_id,bool settings_beeps,bool settings_
     reset();
     drawTitleBox(PSTR("SETUP MENU"));
 
-    TV.printPGM(5, 5+1*MENU_Y_SIZE, PSTR("ORDER: "));
+    TV.printPGM(MENU_X_MARGIN, MENU_Y_MARGIN+1*MENU_Y_SIZE, PSTR("Order: "));
     if(settings_orderby_channel) {
-        TV.printPGM(5+(6*8), 5+1*MENU_Y_SIZE, PSTR("CHANNEL  "));
+        TV.printPGM(MENU_X_MARGIN+(6*8), MENU_Y_MARGIN+1*MENU_Y_SIZE, PSTR("Channel  "));
     }
     else {
-        TV.printPGM(5+(6*8), 5+1*MENU_Y_SIZE, PSTR("FREQUENCY"));
+        TV.printPGM(MENU_X_MARGIN+(6*8), MENU_Y_MARGIN+1*MENU_Y_SIZE, PSTR("Frequency"));
     }
 
 
-    TV.printPGM(5, 5+2*MENU_Y_SIZE, PSTR("BEEPS: "));
+    TV.printPGM(MENU_X_MARGIN, MENU_Y_MARGIN+2*MENU_Y_SIZE, PSTR("Beeps: "));
     if(settings_beeps) {
-        TV.printPGM(5+(6*8), 5+2*MENU_Y_SIZE, PSTR("ON "));
+        TV.printPGM(MENU_X_MARGIN+(6*8), MENU_Y_MARGIN+2*MENU_Y_SIZE, PSTR("On "));
     }
     else {
-        TV.printPGM(5+(6*8), 5+2*MENU_Y_SIZE, PSTR("OFF"));
+        TV.printPGM(MENU_X_MARGIN+(6*8), MENU_Y_MARGIN+2*MENU_Y_SIZE, PSTR("Off"));
     }
 
 
 /* NO NEED FOR CALL SIGN IN TVOUT MODE
-    TV.printPGM(10, 5+3*MENU_Y_SIZE, PSTR("SIGN : "));
+    TV.printPGM(MENU_X_MARGIN, MENU_Y_MARGIN+3*MENU_Y_SIZE, PSTR("SIGN : "));
     if(editing>=0) {
         for(uint8_t i=0; i<10; i++) {
-            TV.print(5+((7+i)*8), 5+3*MENU_Y_SIZE, call_sign[i]);
+            TV.print(MENU_X_MARGIN+((7+i)*8), MENU_Y_MARGIN+3*MENU_Y_SIZE, call_sign[i]);
         }
 
-        TV.draw_rect(5+((7)*8),3+(menu_id+1)*MENU_Y_SIZE,TV_X_MAX-(5+((7)*8)),12,  WHITE, INVERT);
-        TV.draw_rect(5+((7+editing)*8),3+(menu_id+1)*MENU_Y_SIZE,8,12,  BLACK, INVERT);
+        TV.draw_rect(MENU_X_MARGIN+((7)*8),3+(menu_id+1)*MENU_Y_SIZE,TV_X_MAX-(5+((7)*8)),12,  WHITE, INVERT);
+        TV.draw_rect(MENU_X_MARGIN+((7+editing)*8),3+(menu_id+1)*MENU_Y_SIZE,8,12,  BLACK, INVERT);
     }
     else {
-        TV.print(5+(6*8), 5+3*MENU_Y_SIZE, call_sign);
+        TV.print(MENU_X_MARGIN+(6*8), MENU_Y_MARGIN+3*MENU_Y_SIZE, call_sign);
     }
 */
 
-    TV.printPGM(5, 5+4*MENU_Y_SIZE, PSTR("CALIBRATE RSSI"));
+    TV.printPGM(MENU_X_MARGIN, MENU_Y_MARGIN+4*MENU_Y_SIZE, PSTR("Calibrate RSSI"));
 #ifdef USE_VOLTAGE_MONITORING
-    TV.printPGM(5, 5+5*MENU_Y_SIZE, PSTR("VOLTAGE ALARM"));
+    TV.printPGM(MENU_X_MARGIN, MENU_Y_MARGIN+5*MENU_Y_SIZE, PSTR("Voltage alarm"));
 
-    TV.printPGM(5, 5+6*MENU_Y_SIZE, PSTR("SAVE & EXIT"));
+    TV.printPGM(MENU_X_MARGIN, MENU_Y_MARGIN+6*MENU_Y_SIZE, PSTR("Save & Exit"));
 #else
-    TV.printPGM(5, 5+5*MENU_Y_SIZE, PSTR("SAVE & EXIT"));
+    TV.printPGM(MENU_X_MARGIN, MENU_Y_MARGIN+5*MENU_Y_SIZE, PSTR("Save & Exit"));
 #endif
 
     TV.draw_rect(0,3+(menu_id+1)*MENU_Y_SIZE,127,12,  WHITE, INVERT);
