@@ -424,7 +424,7 @@ void screens::updateSetupMenu(uint8_t menu_id,bool settings_beeps,bool settings_
 
 
 /* NO NEED FOR CALL SIGN IN TVOUT MODE
-    TV.printPGM(MENU_X_MARGIN, MENU_Y_MARGIN+3*MENU_Y_SIZE, PSTR("SIGN : "));
+    TV.printPGM(MENU_X_MARGIN, MENU_Y_MARGIN+3*MENU_Y_SIZE, PSTR("Sign : "));
     if(editing>=0) {
         for(uint8_t i=0; i<10; i++) {
             TV.print(MENU_X_MARGIN+((7+i)*8), MENU_Y_MARGIN+3*MENU_Y_SIZE, call_sign[i]);
